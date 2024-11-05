@@ -1,0 +1,58 @@
+{
+    "nodes": [
+        {
+            "id": "1a2b3c4d",
+            "type": "http in",
+            "name": "API Prediction",
+            "url": "/predict",
+            "method": "post",
+            "x": 100,
+            "y": 100,
+            "wires": [
+                [
+                    "5e6f7g8h"
+                ]
+            ]
+        },
+        {
+            "id": "5e6f7g8h",
+            "type": "function",
+            "name": "Prepare Data",
+            "func": "let inputData = msg.payload;\nmsg.payload = {\n    features: inputData.features\n};\nreturn msg;",
+            "outputs": 1,
+            "noerr": 0,
+            "x": 300,
+            "y": 100,
+            "wires": [
+                [
+                    "9i0j1k2l"
+                ]
+            ]
+        },
+        {
+            "id": "9i0j1k2l",
+            "type": "http request",
+            "name": "Call ML Model",
+            "method": "POST",
+            "ret": "obj",
+            "url": "http://localhost:5000/predict",
+            "x": 500,
+            "y": 100,
+            "wires": [
+                [
+                    "3m4n5o6p"
+                ]
+            ]
+        },
+        {
+            "id": "3m4n5o6p",
+            "type": "http response",
+            "name": "Send Response",
+            "statusCode": "",
+            "headers": {},
+            "x": 700,
+            "y": 100,
+            "wires": []
+        }
+    ]
+}
